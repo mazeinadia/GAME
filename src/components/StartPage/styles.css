@@ -1,0 +1,30 @@
+.start-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    margin:  50px auto 0;
+}
+
+.logo {
+    height: 100vw;
+    max-height: 300px;
+}
+
+.start-page__btn {
+    margin: 50px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: white;
+    background-color: black;
+}
+
+.start-page__btn:focus {
+    outline: none
+}
+
+.start-page__btn:hover {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}

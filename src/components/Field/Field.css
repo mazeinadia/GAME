@@ -1,0 +1,32 @@
+.page {
+    background-color: black;
+    height: 100vh;
+}
+
+.game {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding-top: calc(50vh - 152px);
+    width: 304px;
+}
+
+.title {
+    color: white;
+}
+
+.field{
+    width: 304px;
+    height: 304px;
+
+}
+
+.row{
+    width: 304px;
+    height: 100px;
+    border-bottom: 2px white solid;
+}
+
+.row:last-child {
+    border-bottom: none;
+}
