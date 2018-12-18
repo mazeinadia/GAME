@@ -1,0 +1,28 @@
+.page {
+    background-color: black;
+    height: 100vh;
+}
+
+.title {
+    color: white;
+}
+
+.result {
+    color: white;
+}
+
+.btn {
+    background-color: red;
+    color: darkgray;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+}
+
+.game {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding-top: calc(50vh - 152px);
+    width: 304px;
+}

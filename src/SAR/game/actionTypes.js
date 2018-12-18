@@ -1,10 +1,7 @@
-export const SET_MY_CELL = 'SET_CELL';
-export const SET_OPPONENT_CELL = 'SET_CELL';
 export const START_GAME = 'START_GAME';
-export const SET_FIELD = 'SET_FIELD';
 export const CONNECT = 'CONNECT';
 export const DISCONNECT = 'DISCONNECT';
 export const CONTINUE_GAME = 'CONTINUE_GAME';
-export const OPPONENT_DISCONNECTED = 'OPPONENT_DISCONNECTED';
-export const FINISH = 'FINISH';
-export const RESTART = 'RESTART';
+export const WIN = "WIN";
+export const LOST = "LOST";
+export const PRESS = "PRESS";

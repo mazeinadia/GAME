@@ -4,13 +4,11 @@ import {
     CONNECT,
     CONTINUE_GAME,
     DISCONNECT,
-    RESTART,
-    FINISH,
-    SET_MY_CELL, SET_OPPONENT_CELL, OPPONENT_DISCONNECTED
+    WIN,
+    LOST,
+    PRESS
 } from './actionTypes';
 import { GAME_API } from '../../constants/endpoints';
-import { cellState } from '../../constants/enums';
-import { getCookie} from "../login/actions";
 
 let socket;
 
@@ -24,60 +22,34 @@ export const connect = () => dispatch => {
 
     socket.on('start',  (data) => dispatch({
         type: START_GAME,
-        usersElement: data.elem === 0 ? cellState.zero : cellState.cross,
-        actionIsAvailable: (data.start === 1)
+        user: data
     }));
 
-    socket.on('oposite disconnect', () => dispatch({
-        type: OPPONENT_DISCONNECTED
+    socket.on('win', (data) => dispatch({
+        type: WIN,
+        //news: JSON.parse(data)
     }));
 
-    socket.on('action', (data) => dispatch({
-        type: SET_OPPONENT_CELL,
-        rowIndex: JSON.parse(data).y,
-        cellIndex: JSON.parse(data).x
+    socket.on('lost', () => dispatch({
+        type: LOST
     }));
 
     socket.on('continue', (data) => {
-
-        data = JSON.parse(data.toString());
-        debugger
         dispatch({
             type: CONTINUE_GAME,
-            field: data.progress.map(row => {
-                return row.map(cell => (cell === 0) ? cellState.zero : (cell === 2 ? cellState.empty : cellState.cross))
-            }),
-            usersElement: data.elem === 0 ? cellState.zero : cellState.cross,
-            actionIsAvailable: (data.start === 1)
+            user: data
         })
     });
 };
 
-export const setCellState = (rowIndex, cellIndex ) => {
-    socket.emit('action', JSON.stringify({x: cellIndex, y: rowIndex}));
-    console.log('ACTION!');
+export const press = () => {
+    socket.emit('press');
+    console.log('PRESS!');
     return({
-        type: SET_MY_CELL,
-        rowIndex,
-        cellIndex
-    });
-};
-
-export const finishGame = () => {
-    socket.emit('finish');
-    return({
-        type:FINISH
+        type: PRESS
     });
 };
 
 export const disconnect = () => ({
     type: DISCONNECT
 });
-
-export const restartGame = () => {
-    socket.emit('restart');
-
-    return{
-        type: RESTART
-    };
-};

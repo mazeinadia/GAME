@@ -1,76 +1,56 @@
 import {
     CONNECT,
     CONTINUE_GAME,
-    SET_MY_CELL, SET_OPPONENT_CELL,
-    SET_FIELD,
-    RESTART,
-    OPPONENT_DISCONNECTED,
-    START_GAME, DISCONNECT,
-    FINISH
+    WIN,
+    LOST,
+    PRESS,
+    START_GAME,
+    DISCONNECT
 } from './actionTypes';
 
 import { cellState } from '../../constants/enums';
 
 const DefaultState = {
-    actionIsAvailable: false,
-    field: [
-        [cellState.empty, cellState.empty, cellState.empty],
-        [cellState.empty, cellState.empty, cellState.empty],
-        [cellState.empty, cellState.empty, cellState.empty]
-    ],
     lostConnection: false,
     connection: false,
     inGame: false,
+    pressed: false,
 };
 
 export default function Game(state = DefaultState, action) {
 
     switch (action.type) {
         case CONNECT: return {
-            connection: true
+            connection: true,
         };
 
-        case SET_MY_CELL: return {
+        case PRESS: return {
             ...state,
-            field: state.field.map((row, rowIndex) =>
-                rowIndex === action.rowIndex ? (row.map((cell, cellIndex) =>
-                    cellIndex === action.cellIndex ? state.usersElement : cell))
-                    : row),
-            actionIsAvailable:false
+            pressed: true
         };
 
-        case SET_OPPONENT_CELL:
+        case WIN:
             console.log('opponent act with ' + action.rowIndex + action.cellIndex);
-            console.log(((cellState.cross === state.usersElement) ? cellState.zero : cellState.cross));
             return {
-            ...state,
-            field: state.field.map((row, rowIndex) =>
-                rowIndex === action.rowIndex ? (row.map((cell, cellIndex) =>
-                        cellIndex === action.cellIndex ?
-                            ((cellState.cross === state.usersElement) ? cellState.zero : cellState.cross)
-                            : cell))
-                    : row),
-            actionIsAvailable: true
+                ...state,
+                win: true,
+                msg: 'hi'//action.news
         };
 
         case START_GAME:
-            console.log('start with ' + action.usersElement + ' ' + action.actionIsAvailable);
+            console.log('start with ' + action.user );
             return ({
-            ...state,
-            connection: false,
-            usersElement: action.usersElement,
-            actionIsAvailable: action.actionIsAvailable,
-            field:  [
-                [cellState.empty, cellState.empty, cellState.empty],
-                [cellState.empty, cellState.empty, cellState.empty],
-                [cellState.empty, cellState.empty, cellState.empty]
-            ],
-            inGame: true
+                ...state,
+                connection: false,
+                pressed: false,
+                inGame: true,
+                user: action.user,
+                win: undefined
         });
 
-        case SET_FIELD: return {
+        case LOST: return {
             ...state,
-            field: action.field
+            win: false
         };
 
         case CONTINUE_GAME:
@@ -78,37 +58,16 @@ export default function Game(state = DefaultState, action) {
             console.log(action.actionIsAvailable);
             return {
             ...state,
-            usersElement: action.usersElement,
-            actionIsAvailable: action.actionIsAvailable,
-            field: action.field,
-            lostConnection: false,
-            connection: false,
-            inGame:true
-        };
-
-        case OPPONENT_DISCONNECTED: return {
-            ...state,
-            actionIsAvailable: false,
-            lostConnection: true
+                pressed: false,
+                lostConnection: false,
+                connection: false,
+                inGame:true
         };
 
         case DISCONNECT: return {
-            lostConnection: false,
-            field: [],
-            actionIsAvailable: false,
+            pressed: false,
+            win: undefined,
             connection: false,
-            inGame: false
-        };
-
-        case FINISH: return {
-            winner: true,
-            lostConnection: false,
-            inGame: false
-        };
-
-        case RESTART: return {
-            winner: undefined,
-            lostConnection: false,
             inGame: false
         };
 

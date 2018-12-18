@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Field from '../Field/Field';
+import ButtonField from '../ButtonField/index';
 import StartPage from '../StartPage/index'
 import { checkLogin } from '../../SAR/login/actions';
 
@@ -19,7 +19,7 @@ class Game extends Component {
     render() {
         const { inGame } = this.props;
         if (inGame) {
-            return <Field/>
+            return <ButtonField/>
         } else {
             return <StartPage/>
         }
@@ -29,6 +29,7 @@ class Game extends Component {
 export default connect(
     state => ({
         inGame: state.Game.inGame,
+        win: state.Game.win,
         isAuthenticated: state.Login.isAuthenticated
     }),
     dispatch => ({checkLogin: () => dispatch(checkLogin())})

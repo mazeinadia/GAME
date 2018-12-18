@@ -12,12 +12,13 @@ export const login = (email, pass) => async (dispatch) => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            "password": pass || '111111',
+            "password": pass || '123456',
             "username": email || 'egor'
         })
     });
 
    response = await response.json();
+   console.log(response);
 
     if (response) {
         setCookie('token', response.token);
@@ -97,6 +98,8 @@ function setCookie(name, value, options) {
             updatedCookie += "=" + propValue;
         }
     }
+
+    console.log(updatedCookie);
 
     document.cookie = updatedCookie;
 }
