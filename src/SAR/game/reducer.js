@@ -34,7 +34,7 @@ export default function Game(state = DefaultState, action) {
             return {
                 ...state,
                 win: true,
-                msg: 'hi'//action.news
+                msg: action.news
         };
 
         case START_GAME:

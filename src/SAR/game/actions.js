@@ -20,15 +20,20 @@ export const connect = () => dispatch => {
         type: CONNECT
     }));
 
-    socket.on('start',  (data) => dispatch({
+    socket.on('start', (data) => dispatch({
         type: START_GAME,
         user: data
     }));
 
-    socket.on('win', (data) => dispatch({
-        type: WIN,
-        //news: JSON.parse(data)
-    }));
+    socket.on('win', (data) => {
+        console.log('msg:');
+        console.log(data);
+        return dispatch({
+            type: WIN,
+            news: data
+        })
+        });
+
 
     socket.on('lost', () => dispatch({
         type: LOST

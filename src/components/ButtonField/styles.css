@@ -26,3 +26,7 @@
     padding-top: calc(50vh - 152px);
     width: 304px;
 }
+
+.news {
+    color: white;
+}
